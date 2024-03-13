@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>3D Registration Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f8f9fa;
+      perspective: 1000px;
+    }
+
+    .container {
+      position: relative;
+      transform-style: preserve-3d;
+      width: 400px;
+      height: 400px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transform: rotateX(20deg) rotateY(20deg);
+    }
+
+   
+
+    .form-group:first-child {
+      transform: translateZ(200px);
+    }
+
+    .form-group:nth-child(2) {
+      transform: rotateY(0deg) translateZ(200px);
+    }
+
+    .form-group:last-child {
+      transform: rotateY(180deg) translateZ(200px);
+    }
+
+    .form-group.hide {
+      transform: translateZ(-100px);
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group hide">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const form = document.getElementById('registrationForm');
+    const formGroups = document.querySelectorAll('.form-group');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Perform form validation and submission logic here
+      // You can access form inputs using form.elements
+      // For example: const name = form.elements['name'].value;
+    });
+
+    let currentFormIndex = 0;
+
+    formGroups.forEach((formGroup, index) => {
+      formGroup.addEventListener('transitionend', () => {
+        if (index !== currentFormIndex) {
+          formGroup.classList.add('hide');
+        }
+      });
+    });
+
+    form.addEventListener('click', () => {
+      currentFormIndex++;
+      if (currentFormIndex >= formGroups.length) {
+        currentFormIndex = 0;
+      }
+      formGroups[currentFormIndex].classList.remove('hide');
+    });
+  </script>
+</body>
+
+</html>
